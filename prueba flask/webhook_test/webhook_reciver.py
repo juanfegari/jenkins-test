@@ -1,7 +1,14 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from function1 import Personas, Pedido
 
 app = Flask(__name__)
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    data = request.json
+    print(f"Received data: {data}")
+    return jsonify({'status': 'success'}), 200
+
 
 @app.route('/webhook_personas', methods=['POST'])
 def listener():
@@ -25,4 +32,4 @@ def listener2():
 
     
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5000)
